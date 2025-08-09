@@ -1,3 +1,4 @@
+// ...existing code...
 import {
   BadRequestException,
   Injectable,
@@ -83,13 +84,13 @@ export class AuthService {
       relations: ['role'],
     });
     if (!user) {
-      throw new UnauthorizedException('Wrong credentials');
+      throw new UnauthorizedException('Sai tên đăng nhập hoặc mật khẩu');
     }
 
     //So sánh mật khẩu nhập vào với mật khẩu đã lưu
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      throw new UnauthorizedException('Wrong credentials');
+      throw new UnauthorizedException('Sai tên đăng nhập hoặc mật khẩu');
     }
 
     //Tạo JWT token
@@ -199,5 +200,24 @@ export class AuthService {
 
     const role = await this.rolesService.getRoleById(user.roleId.toString());
     return role ? role.permissions : [];
+  }
+
+  async getMe(userId: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['role'],
+    });
+    if (!user) throw new NotFoundException('User not found');
+    return {
+      success: true,
+      data: {
+        id: user.id,
+        fullname: user.fullname,
+        username: user.username,
+        email: user.email,
+        role: user.role ? user.role.name : null,
+        createdAt: user.createdAt,
+      },
+    };
   }
 }
