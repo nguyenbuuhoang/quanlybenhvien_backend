@@ -155,7 +155,7 @@ export class AuthService {
   }
 
   async generateUserTokens(userId) {
-    const accessToken = this.jwtService.sign({ userId }, { expiresIn: '10h' });
+  const accessToken = this.jwtService.sign({ userId }, { expiresIn: '30m' });
     const refreshToken = uuidv4();
 
     await this.storeRefreshToken(refreshToken, userId);
@@ -189,6 +189,14 @@ export class AuthService {
       });
       await this.refreshTokenRepository.save(newToken);
     }
+  }
+  async logout(userId: number) {
+    // Xóa refresh token của user khi logout
+    await this.refreshTokenRepository.delete({ userId });
+    return {
+      success: true,
+      message: 'Logout successful',
+    };
   }
 
   async getUserPermissions(userId: number) {

@@ -11,8 +11,12 @@ export class Role {
   @PrimaryGeneratedColumn()
   id: number;
 
+
   @Column({ type: 'varchar', length: 255 })
   name: string;
+
+  @Column({ type: 'varchar', length: 512, nullable: true })
+  description?: string;
 
   @Column({ type: 'json' })
   permissions: Permission[];

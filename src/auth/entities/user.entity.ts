@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 import { Exclude } from 'class-transformer';
+import { UserStatus } from '../enums/user-status.enum';
 
 @Entity('users')
 export class User {
@@ -20,6 +21,13 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   @Exclude()
   password: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserStatus,
+    default: UserStatus.ACTIVE,
+  })
+  status: UserStatus;
 
   @Column({ name: 'role_id', nullable: true })
   roleId: number;

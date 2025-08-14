@@ -24,6 +24,11 @@ export class AuthController {
   async refreshTokens(@Body() refreshTokenDto: RefreshTokenDto) {
     return this.authService.refreshTokens(refreshTokenDto.refreshToken);
   }
+  @UseGuards(AuthenticationGuard)
+  @Post('logout')
+  async logout(@Req() req) {
+    return this.authService.logout(req.userId);
+  }
 
   @UseGuards(AuthenticationGuard)
   @Put('change-password')

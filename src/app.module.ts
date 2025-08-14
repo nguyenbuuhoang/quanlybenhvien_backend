@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesModule } from './roles/roles.module';
+import { UsersModule } from './users/users.module';
 import config from './config/config';
 import { User } from './auth/entities/user.entity';
 import { Role } from './roles/entities/role.entity';
@@ -44,6 +45,7 @@ import { ResetToken } from './auth/entities/reset-token.entity';
     }),
     AuthModule,
     RolesModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
