@@ -12,7 +12,27 @@ export class RolesService {
   async getRoleByName(name: string) {
     return this.roleRepository.findOne({ where: { name } });
   }
-
+  //Tạo Role Admin mặc định
+/*   async createAdminRole() {
+    // Tên role admin mặc định
+    const name = 'admin';
+    const description = 'Admin role with all permissions';
+    // Lấy tất cả resource và action
+  const { Resource } = require('./enums/resource.enum');
+  const { Action } = require('./enums/action.enum');
+  const resources: string[] = Object.values(Resource);
+  const actions: string[] = Object.values(Action);
+  const permissions = resources.map(resource => ({ resource, actions }));
+    // Kiểm tra đã tồn tại role admin chưa
+    const existingRole = await this.getRoleByName(name);
+    if (existingRole) {
+      return { success: false, message: 'Admin role already exists', data: existingRole };
+    }
+    // Tạo role admin
+    const newRole = this.roleRepository.create({ name, description, permissions });
+    const savedRole = await this.roleRepository.save(newRole);
+    return { success: true, message: 'Admin role created', data: savedRole };
+  } */
   async createRole(role: CreateRoleDto) {
 //TODO: Kiểm tra tên vai trò phải là duy nhất
     const existingRole = await this.roleRepository.findOne({

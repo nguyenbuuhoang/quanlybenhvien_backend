@@ -5,11 +5,16 @@ import { CreateRoleDto, UpdateRoleDto } from './dtos/role.dto';
 import { Resource } from './enums/resource.enum';
 import { Action } from './enums/action.enum';
 
-@UseGuards(AuthenticationGuard)
+
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
-
+  //Tạo Role Admin mặc định
+/*   @Post('_create-admin')
+  async createAdminRole() {
+    return this.rolesService.createAdminRole();
+  } */
+  @UseGuards(AuthenticationGuard)
   @Post()
   async createRole(@Body() role: CreateRoleDto) {
     return this.rolesService.createRole(role);
